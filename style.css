@@ -1,19 +1,37 @@
 /* Base & Reset */
 :root {
+    /* Light Mode (Default) */
+    --bg-color: #f6f8fa;
+    --text-primary: #1f2328;
+    --text-secondary: #57606a;
+    --accent-color: #2ea043;
+    --accent-hover: #1f883d;
+    --card-bg: #ffffff;
+    --border-color: #d0d7de;
+    --header-bg: rgba(255, 255, 255, 0.95);
+    
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Outfit', sans-serif;
+    
+    --container-width: 1100px;
+    --header-height: 80px;
+
+    --profile-glow: rgba(46, 160, 67, 0.1);
+    --hero-gradient: radial-gradient(circle at top right, rgba(46, 160, 67, 0.1), transparent 40%);
+}
+
+[data-theme="dark"] {
+    /* Dark Mode */
     --bg-color: #0d1117;
     --text-primary: #e6edf3;
     --text-secondary: #8b949e;
     --accent-color: #2ea043;
-    /* Greenish/Teal for Climate Tech */
     --accent-hover: #3fb950;
     --card-bg: rgba(22, 27, 34, 0.8);
     --border-color: #30363d;
-
-    --font-heading: 'Outfit', sans-serif;
-    --font-body: 'Outfit', sans-serif;
-
-    --container-width: 1100px;
-    --header-height: 80px;
+    --header-bg: rgba(13, 17, 23, 0.85);
+    --profile-glow: rgba(46, 160, 67, 0.2);
+    --hero-gradient: radial-gradient(circle at top right, rgba(46, 160, 67, 0.1), transparent 40%);
 }
 
 * {
@@ -32,6 +50,7 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 a {
@@ -122,9 +141,10 @@ ul {
     top: 0;
     width: 100%;
     z-index: 1000;
-    background-color: rgba(13, 17, 23, 0.85);
+    background-color: var(--header-bg);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .nav-container {
@@ -162,13 +182,51 @@ ul {
     cursor: pointer;
 }
 
+/* Theme Toggle Button */
+.theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-right: 20px;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle:hover {
+    color: var(--accent-color);
+}
+
+.theme-toggle .icon-sun,
+.theme-toggle .icon-moon {
+    display: none;
+}
+
+/* Logic for icons: 
+   If dark theme is active, show sun (to switch to light).
+   If light theme is active, show moon (to switch to dark). 
+*/
+
+/* Default (Light Mode): Show Moon */
+html:not([data-theme="dark"]) .theme-toggle .icon-moon {
+    display: block;
+}
+
+/* Dark Mode: Show Sun */
+[data-theme="dark"] .theme-toggle .icon-sun {
+    display: block;
+}
+
 /* Hero Section */
 .hero {
     min-height: 100vh;
     display: flex;
     align-items: center;
     padding-top: var(--header-height);
-    background: radial-gradient(circle at top right, rgba(46, 160, 67, 0.1), transparent 40%);
+    background: var(--hero-gradient);
 }
 
 .hero-content {
@@ -218,8 +276,9 @@ ul {
     font-weight: 700;
     color: var(--text-secondary);
     border: 2px solid var(--accent-color);
-    box-shadow: 0 0 30px rgba(46, 160, 67, 0.2);
+    box-shadow: 0 0 30px var(--profile-glow);
     margin: 0 auto;
+    transition: box-shadow 0.3s ease;
 }
 
 /* Card Style */
@@ -228,7 +287,7 @@ ul {
     border: 1px solid var(--border-color);
     padding: 30px;
     border-radius: 12px;
-    transition: transform 0.3s ease, border-color 0.3s ease;
+    transition: transform 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
 }
 
 .card:hover {
@@ -517,7 +576,7 @@ ul {
         right: -100%;
         width: 70%;
         height: 100vh;
-        background-color: rgba(13, 17, 23, 0.95);
+        background-color: var(--header-bg);
         backdrop-filter: blur(10px);
         padding-top: 100px;
         transition: right 0.3s ease;
